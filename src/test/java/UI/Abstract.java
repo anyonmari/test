@@ -25,11 +25,14 @@ public class Abstract {
         WebDriverManager.chromedriver().setup();
         options = new ChromeOptions();
         options.addArguments("--headless");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         driver = new EventFiringWebDriver(new ChromeDriver(options));
         wait = new WebDriverWait(driver,30);
         actions = new Actions(driver);
         driver.register(new Custom());
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
     @BeforeEach
