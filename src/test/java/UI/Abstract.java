@@ -28,6 +28,7 @@ public class Abstract {
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--window-size=1920,1080");  // Установите размер окна
         driver = new EventFiringWebDriver(new ChromeDriver(options));
         wait = new WebDriverWait(driver,30);
         actions = new Actions(driver);
