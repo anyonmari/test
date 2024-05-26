@@ -3,7 +3,6 @@ package UI.Tests;
 import UI.Abstract;
 import UI.PageObject.CartPageWB;
 import UI.PageObject.MainPageWB;
-import UI.TestListener;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestListener.class)
+
 @Feature("Тесты связанные с провекрой добавления товара в корзину")
 public class WBTests extends Abstract {
     MainPageWB mainPageWB;

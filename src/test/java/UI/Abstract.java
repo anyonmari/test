@@ -1,6 +1,7 @@
 package UI;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -39,6 +40,10 @@ public class Abstract {
     @BeforeEach
     public void init() {
         setUp();
+    }
+    @AfterAll
+    public static void tearDown() {
+        driver.quit();
     }
 
     public void waitElement (By locator) {
