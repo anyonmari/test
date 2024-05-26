@@ -11,9 +11,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.openqa.selenium.By;
 
 @ExtendWith(TestListener.class)
 @Feature("Тесты связанные с провекрой добавления товара в корзину")
@@ -54,7 +51,5 @@ public class WBTests extends Abstract {
 
         Assertions.assertEquals(priceFirstItemMainPage, priceFirstItemCartPage, "Цена товара на главной странице не равна цене товара в корзине");
         Assertions.assertEquals(priceSecondItemMainPage, priceSecondItemCartPage, "Цена товара на главной странице не равна цене товара в корзине");
-
-
     }
 }
