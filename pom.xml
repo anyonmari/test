@@ -23,6 +23,7 @@
         <selenium-java.version>3.141.59</selenium-java.version>
         <webdrivermanager.version>5.5.3</webdrivermanager.version>
     </properties>
+
     <build>
         <plugins>
             <!-- Настройка Allure Maven Plugin -->
@@ -32,7 +33,17 @@
                 <version>${allure-maven.version}</version>
                 <configuration>
                     <reportVersion>${reportVersion.version}</reportVersion>
+                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- Настройка Maven Surefire Plugin с интеграцией Allure -->
             <plugin>
@@ -44,6 +55,9 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
