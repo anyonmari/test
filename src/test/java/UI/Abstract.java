@@ -24,6 +24,7 @@ public class Abstract {
     public static void setUp() {
         WebDriverManager.chromedriver().setup();
         options = new ChromeOptions();
+        options.addArguments("--headless");
         driver = new EventFiringWebDriver(new ChromeDriver(options));
         wait = new WebDriverWait(driver,30);
         actions = new Actions(driver);
