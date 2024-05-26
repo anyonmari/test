@@ -5,31 +5,27 @@ pipeline {
         maven 'maven jenkins'
     }
 
-    stages {
-        stage('Clone repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/anyonmari/test.git'
-            }
-        }
+   stages {
+           stage('Build') {
+               steps {
+                   // Получить код из репозитория GitHub
+                   git 'https://github.com/anyonmari/test.git'
+                   sh 'mvn clean test'
+                   sh 'ls -la target/allure-results'
+               }
+           }
 
-        stage('Build and Test') {
-            steps {
-                sh 'mvn clean test'
-                sh 'ls -la target/allure-results' // Проверка наличия результатов Allure
-            }
-        }
-    }
+           stage('Allure Report') {
+               steps {
+                   allure includeProperties: false, jdk: '', results: [[path: 'target/allure-results']]
+               }
+           }
+       }
 
-    post {
-        always {
-            // Генерация и сохранение отчета Allure в директории target/allure-report
-            script {
-                sh 'allure generate target/allure-results --clean'
-                sh 'allure serve target/allure-results'
-            }
-            // Архивирование артефактов и запись результатов тестов
-            archiveArtifacts artifacts: '**/target/allure-report/**', allowEmptyArchive: true
-            junit '**/target/surefire-reports/*.xml'
-        }
-    }
-}
+       post {
+           always {
+               archiveArtifacts artifacts: '**/target/allure-results/**', allowEmptyArchive: true
+               junit '**/target/surefire-reports/*.xml'
+           }
+       }
+   }
