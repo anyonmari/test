@@ -1,24 +1,33 @@
 pipeline {
     agent any
+
     tools {
-        maven 'Maven 3.8.1'
+        maven 'maven jenkins'
     }
+
     stages {
-        stage('Build') {
+        stage('Clone repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/anyonmari/test.git'
+            }
+        }
+
+        stage('Build and Test') {
             steps {
                 sh 'mvn clean test'
-                sh 'ls -la target/allure-results'
-            }
-        }
-        stage('Allure Report') {
-            steps {
-                allure includeProperties: false, jdk: '', results: [[path: 'target/allure-results']]
+                sh 'ls -la target/allure-results' // Проверка наличия результатов Allure
             }
         }
     }
+
     post {
         always {
-            archiveArtifacts artifacts: '**/target/allure-results/**', allowEmptyArchive: true
+            // Генерация и сохранение отчета Allure в директории target/allure-report
+            script {
+                sh 'allure generate target/allure-results --clean -o target/allure-report'
+            }
+            // Архивирование артефактов и запись результатов тестов
+            archiveArtifacts artifacts: '**/target/allure-report/**', allowEmptyArchive: true
             junit '**/target/surefire-reports/*.xml'
         }
     }
