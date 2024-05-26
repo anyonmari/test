@@ -24,7 +24,8 @@ pipeline {
         always {
             // Генерация и сохранение отчета Allure в директории target/allure-report
             script {
-                sh 'allure generate target/allure-results --clean -o target/allure-report'
+                sh 'allure generate target/allure-results --clean'
+                sh 'allure serve target/allure-results'
             }
             // Архивирование артефактов и запись результатов тестов
             archiveArtifacts artifacts: '**/target/allure-report/**', allowEmptyArchive: true
